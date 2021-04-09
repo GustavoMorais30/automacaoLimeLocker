@@ -1,5 +1,6 @@
 package tests;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +38,6 @@ public class loginAndBuy {
         String messageErrorPassword = navegadorLime10.findElement(By.id("login[password]-error")).getText();
         assertEquals("ESTE É UM CAMPO OBRIGATÓRIO.", messageErrorPassword);
 
-
         WebElement email = navegadorLime10.findElements(By.xpath("//*[@id=\"cdz-login-form-dropdown\"]/div/div/form/fieldset/div[1]/div/input")).get(1);
         email.sendKeys("testautomation");
 
@@ -60,9 +60,48 @@ public class loginAndBuy {
         submit.click();
         navegadorLime10.findElement(By.className("main-logo")).click();
 
-        //select one or more products and add to cart
-        Thread.sleep(Long.parseLong("6000"));
-        navegadorLime10.findElement(By.linkText("Bobó de Frango")).click();
+        navegadorLime10.findElement(By.xpath("//*[@id=\"menu-6-606f601c8cc9f\"]/ul/li[4]/a")).click();
+        navegadorLime10.findElement(By.xpath("//*[@id=\"category-products-grid\"]/ol/li[3]/div/div[2]/strong/a")).click();
+
+        //Add to Wish List
+        navegadorLime10.findElement(By.xpath("//*[@id=\"product_addtocart_form\"]/div[2]/a[1]")).click();
+        navegadorLime10.findElement(By.xpath("/html/body/div[3]/aside[1]/div[2]/footer/button")).click();
+
+        navegadorLime10.findElement(By.className("main-logo")).click();
+
+        navegadorLime10.findElement(By.xpath("//*[@id=\"menu-6-606f601c8cc9f\"]/ul/li[5]")).click();
+        navegadorLime10.findElement(By.xpath("//*[@id=\"category-products-grid\"]/ol/li[2]/div/div[2]/strong/a")).click();
+
+        navegadorLime10.findElement(By.xpath("//*[@id=\"product_addtocart_form\"]/div[2]/a[1]")).click();
+        navegadorLime10.findElement(By.xpath("/html/body/div[3]/aside[1]/div[2]/footer/button/span")).click();
+
+        navegadorLime10.findElement(By.xpath("//*[@id=\"maincontent\"]/div[2]/div[1]/div[2]/a")).click();
+
+        //Wishlist
+//        navegadorLime10.findElement(By.xpath("/html/body/div[3]/header/div[1]/div/div/div[2]/div/ul/li[3]")).click();
+        String messagemItensWishlist = navegadorLime10.findElement(By.xpath("//*[@id=\"maincontent\"]/div[2]/div[1]/div[3]/a/div/div[7]/div[2]")).getText();
+        assertEquals("2 itens", messagemItensWishlist);
+
+        //Delete items from the wish list
+        navegadorLime10.findElement(By.xpath("//*[@id=\"newsletter\"]")).sendKeys("  ");
+        navegadorLime10.findElement(By.xpath("//*[@id=\"wishlist-sidebar\"]/li[1]/div/div/div[2]/div[2]/a")).click();
+
+        navegadorLime10.findElement(By.xpath("//*[@id=\"newsletter\"]")).sendKeys("  ");
+        navegadorLime10.findElement(By.xpath("//*[@id=\"wishlist-sidebar\"]/li[1]/div/div/div[2]/div[2]/a")).click();
+
+        Thread.sleep(Long.parseLong("2000"));
+        String messageRemoved = navegadorLime10.findElement(By.xpath("//*[@id=\"maincontent\"]/div[1]/div[2]/div/div/div")).getText();
+        assertEquals("Lençol (solteiro) foi removido da sua lista de desejos.", messageRemoved);
+
+        navegadorLime10.findElement(By.xpath("//*[@id=\"maincontent\"]/div[2]/div[1]/div[3]/a/div/div[1]")).click();
+
+        String noItems = navegadorLime10.findElement(By.xpath("//*[@id=\"wishlist-view-form\"]/div[1]/span")).getText();
+        assertEquals("Você não tem nenhum item em sua lista de desejos.", noItems);
+
+        navegadorLime10.findElement(By.className("main-logo")).click();
+
+        navegadorLime10.findElement(By.xpath("//*[@id=\"menu-6-606f601c8cc9f\"]/ul/li[2]/a")).click();
+        navegadorLime10.findElement(By.xpath("//*[@id=\"maincontent\"]/div[3]/div/div[2]/div/div[1]/ol/li[2]/div/div/strong/a")).click();
 
         //click in cart
         navegadorLime10.findElement(By.id("product-addtocart-button")).click();
@@ -70,9 +109,10 @@ public class loginAndBuy {
         //finish buy
         navegadorLime10.findElement(By.id("footer-cart-btn-checkout")).click();
         Thread.sleep(Long.parseLong("14000"));
-        navegadorLime10.findElement(By.xpath("//*[@id=\"stripe_checkout_card\"]/div[1]/label/span[2]")).click();
+        navegadorLime10.findElement(By.xpath("//*[@id=\"shipping-method-buttons-container\"]/div/button")).click();
         Thread.sleep(Long.parseLong("6000"));
 
+        navegadorLime10.findElement(By.xpath("//*[@id=\"stripe_payments_checkout_card\"]")).click();
         navegadorLime10.findElement(By.xpath("//*[@id=\"stripe_checkout_card\"]/div[2]/div[4]/div/button/span")).click();
         Thread.sleep(Long.parseLong("9000"));
         //Payments
@@ -82,7 +122,6 @@ public class loginAndBuy {
         navegadorLime10.findElement(By.xpath("//*[@id=\"billingName\"]")).sendKeys("Test Automation");
 
         navegadorLime10.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/form/div[2]/div[4]/button/div[3]")).click();
-
         navegadorLime10.quit();
     }
 }

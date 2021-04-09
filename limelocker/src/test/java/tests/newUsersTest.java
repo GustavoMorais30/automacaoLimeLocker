@@ -2,6 +2,7 @@ package tests;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -92,5 +93,9 @@ public class newUsersTest {
         Thread.sleep(Long.parseLong("3000"));
         //account creation message validated
         navegadorLime10.findElement(By.xpath("//div[@data-ui-id=\"message-success\"]"));
+    }
+    @After
+        public void tearDown(){
+        navegadorLime10.quit();
     }
 }
